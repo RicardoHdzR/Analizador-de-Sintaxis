@@ -19,4 +19,7 @@ def syntax_highlight(archivo_entrada,archivo_salida):
     entrada = open(archivo_entrada,"r")
     salida = open(archivo_salida,"w")
     lineas = entrada.readlines()
-    
+    var = ""
+    num = ""
+    for linea in lineas:
+        tam = len(linea)
