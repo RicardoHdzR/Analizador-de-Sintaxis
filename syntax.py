@@ -66,11 +66,17 @@ def syntax_highlight(archivo_entrada,archivo_salida):
                             break
                 i = j
             elif linea[i] == " ":
+                j = 0
                 while linea[i] == " ":
-                    line = line + linea[i]
+                    #line = line + linea[i]
                     i += 1
-                    if linea[i] != " ":
+                    j += 1
+                    #if linea[i] != " ":
+                        #break
+                    if j == 3:
+                        line = line + "<span class='tab'></span>"
                         break
+                    
             elif linea[i].isalpha():
                 var = var + linea[i]
                 j = i+1
