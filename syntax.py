@@ -20,6 +20,95 @@ def syntax_highlight(archivo_entrada,archivo_salida):
     salida = open(archivo_salida,"w")
     lineas = entrada.readlines()
     var = ""
-    num = ""
+    line = ""
     for linea in lineas:
+        line = "<p>"
         tam = len(linea)
+        i = 0
+        while i <= tam:
+            if i == tam:
+                line = line + "</p>"
+                salida.write(line)
+                break
+            elif linea[i] == " ":
+                line = line + linea[i]
+                i += 1
+            elif linea[i].isalpha():
+                var = var + linea[i]
+                j = i+1
+                while j < tam:
+                    if linea[j].isalpha() or linea[j].isnumeric():
+                        var = var + linea[j]
+                        j += 1
+                    else:
+                        if var in palabras_reservadas:
+                            var = "<span class='palabra_reservada'" + var + "</span>"
+                            line = line + var
+                            var = ""
+                            break
+                        else:
+                            var = "<span class='variable'" + var + "</span>"
+                            line = line + var
+                            var = ""
+                            break     
+                i = j
+            elif linea[i].isnumeric():
+                var = var + linea[i]
+                j = i+1
+                while j < tam:
+                    if linea[j].isnumeric() or linea[j] == "e":
+                        var = var + linea[j]
+                        j += 1
+                    else:
+                        var = "<span class='numero'" + var + "</span>"
+                        line = line + var
+                        var = ""
+                        break
+                i = j
+            elif linea[i] in operadores:
+                if linea[i] == "/":
+                    if linea[i+1] == "/":
+                        var = "<span class='numero'" + linea[i:tam] + "</span>"
+                        line = line + var
+                        var = ""
+                        i = tam
+                else:
+                    var = "<span class='operador'" + linea[i] + "</span>"
+                    line = line + var
+                    i += 1
+            elif linea[i] == "#":
+                var = var + linea[i]
+                j = i+1
+                while j < tam:
+                    if linea[j].isalpha():
+                        var = var + linea[j]
+                        j += 1
+                    else:
+                        if var == "#include":
+                            var = "<span class='palabra_reservada'" + linea[j] + "</span>"
+                            line = line + var
+                            var = ""
+                            break
+                        else:
+                            var = "<span class='operador'" + linea[j] + "</span>"
+                            line = line + var
+                            var = ""
+                            break
+                i = j
+            elif linea[i] == '"':
+                var = var + linea[i]
+                j = i+1
+                while j < tam:
+                    if linea[j] == '"':
+                        var = "<span class='string'" + linea[j] + "</span>"
+                        line = line + var
+                        var = ""
+                        break
+                    else:
+                        var = var + linea[j]
+                i = j
+    entrada.close()
+    salida.close()
+    print("Fin del Programa")
+
+syntax_highlight('text.txt','highlighter.html')
