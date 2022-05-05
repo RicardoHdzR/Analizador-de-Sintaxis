@@ -26,7 +26,7 @@ def syntax_highlight(archivo_entrada,archivo_salida):
     <html>
     <head>
         <meta charset="UTF-8">
-        <title> Curriculum </title>
+        <title> Analizador de Sintaxis </title>
         <link rel="stylesheet" href="formato.css">
     </head>
     <body>\n"""
