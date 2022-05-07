@@ -25,6 +25,7 @@ def syntax_highlight(archivo_entrada,archivo_salida):
     inicio = """<!DOCTYPE html>
     <html>
     <head>
+        <link href="https://allfont.es/allfont.css?fonts=lucida-console" rel="stylesheet" type="text/css" />
         <meta charset="UTF-8">
         <title> Analizador de Sintaxis </title>
         <link rel="stylesheet" href="formato.css">
