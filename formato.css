@@ -63,3 +63,10 @@ body {
 .comentario {
     color: var(--comment);
 }
+
+.error {
+    color: var(--red);
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: red;
+}

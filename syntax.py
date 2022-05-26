@@ -5,6 +5,9 @@
 #El siguiente programa es un analizador léxico para programas hechos en el lenguaje C++
 
 #Definimos una lista con todas las palabras reservadas
+from curses.ascii import isalpha
+
+
 palabras_reservadas = ["auto","const","double","float","int","short","struct",
 "unsigned","break","continue",
 "else","for","long","signed","switch",
@@ -39,7 +42,7 @@ def syntax_highlight(archivo_entrada,archivo_salida):
     </head>
     <body>\n"""
     final = """</body>
-</html>"""
+    </html>"""
     # antes de analizar el archivo escribimos el inicio en el archivo
     salida.write(inicio)
     # empieza el análisis
@@ -128,10 +131,20 @@ def syntax_highlight(archivo_entrada,archivo_salida):
                 j = i+1
                 # mientras j sea menor al tamaño de la línea
                 while j < tam:
-                    # si es un npumero o una e (para los exponenciales) lo agrega a var y aumenta j
-                    if linea[j].isnumeric() or linea[j] == "e":
+                    # si es un número, un punto o una e (para los exponenciales) lo agrega a var y aumenta j
+                    if linea[j].isnumeric() or linea[j] == "e" or linea[j] == ".":
                         var = var + linea[j]
                         j += 1
+                    # si es una letra, lee todo mientras sea una letra o número
+                    elif linea[j].isalpha():
+                        while linea[j].isnumeric() or linea[j].isalpha():
+                            var = var + linea[j]
+                            j += 1
+                        # si es diferente de letra o número clasifica la variable como error y lo agrega a la línea
+                        var = "<span class='error'>" + var + "</span>"
+                        line = line + var
+                        var = ""
+                        break
                     # si no lo es lo clasifica como un número y lo agrega a la línea
                     else:
                         var = "<span class='numero'>" + var + "</span>"
